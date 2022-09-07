@@ -12,7 +12,7 @@ const Home = ({navigation,}) => {
 
   const getTourById = () => {
     
-    if(tourId.match(/[^0-9]/g, '') || tourId.length < 6){
+    if(!tourId || tourId.match(/[^0-9]/g, '') || tourId.length < 6){
       input.current.shake()
     } else {
       navigation.navigate('JoinTour')
