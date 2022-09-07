@@ -1,7 +1,9 @@
-import { Text } from "react-native";
+import { View, Button } from "react-native"
+import { Link } from "@react-navigation/native";
+import Sites from "./sites/Sites";
 
 const MyTours = () => {
-  return <Text>My Tours</Text>;
+    return <Sites />
 };
 
 export default MyTours;
