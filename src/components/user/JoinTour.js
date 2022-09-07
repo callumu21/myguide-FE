@@ -5,9 +5,7 @@ import { Button } from "@rneui/themed";
 
 const JoinTour = ({route}) => {
   const tourId = route.params.tourId
-  const [isLoading, setIsLoading] = useState(true)
   const [hasStarted, setHasStarted] = useState(false)
-  const startTourButton = useRef()
 
   useEffect(() => {
 
@@ -26,7 +24,7 @@ const JoinTour = ({route}) => {
   }
 
   return <View> 
-  <Map tourId={tourId} isLoading={isLoading} setIsLoading={setIsLoading}/>
+  <Map tourId={tourId}/>
 </View>
   
 

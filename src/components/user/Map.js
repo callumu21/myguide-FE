@@ -5,11 +5,11 @@ import { View, Text } from "react-native"
 import * as Location from "expo-location"
 import { Marker } from "react-native-maps"
 
-const Map = ({tourId, isLoading, setIsLoading}) => {
+const Map = ({tourId}) => {
   const [errorMsg, setErrorMsg] = useState(null)
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
-//   const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
