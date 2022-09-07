@@ -3,6 +3,8 @@ import { Button, Input } from '@rneui/themed'
 import styles from '../stylesheets/home.js'
 import React from "react";
 import {useState} from 'react'
+import JoinTour from "./user/JoinTour";
+import MyTours from "./tour-organiser/MyTours";
 
 const input = React.createRef();
 

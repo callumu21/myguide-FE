@@ -12,16 +12,18 @@ import theme from './src/stylesheets/theme-provider'
 export default function App() {
 
   const Stack = createNativeStackNavigator();
-  return <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home}/>
-            <Stack.Screen name="JoinTour" component={JoinTour} />
-            <Stack.Screen name="MyTours" component={MyTours} />
-          </Stack.Navigator>
+  return (
+    <ThemeProvider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="JoinTour" component={JoinTour} />
+          <Stack.Screen name="MyTours" component={MyTours} />
+        </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
     </ThemeProvider>
+  );
 }
 
 
