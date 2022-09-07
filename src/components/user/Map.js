@@ -25,7 +25,7 @@ const Map = ({tourId}) => {
     })()
   }, [])
   
-  if (errorMsg) return <Text>{erroMsg}</Text>
+  if (errorMsg) return <Text>{errorMsg}</Text>
 
   while(isLoading){
     return <Text>Joining {tourId}</Text>
