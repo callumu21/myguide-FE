@@ -1,7 +1,10 @@
-import { Text } from "react-native";
+import { Text, View } from "react-native";
+import Map from './Map'
 
 const JoinTour = () => {
-  return <Text>Join Tour</Text>;
+  return <View> 
+    <Map />
+  </View>
 };
 
 export default JoinTour;
