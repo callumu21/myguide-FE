@@ -5,11 +5,11 @@ import { View, Text } from "react-native"
 import * as Location from "expo-location"
 import { Marker } from "react-native-maps"
 
-const Map = () => {
+const Map = ({tourId, isLoading, setIsLoading}) => {
   const [errorMsg, setErrorMsg] = useState(null)
   const [latitude, setLatitude] = useState(0)
   const [longitude, setLongitude] = useState(0)
-  const [isLoading, setIsLoading] = useState(true)
+//   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     (async () => {
@@ -24,37 +24,31 @@ const Map = () => {
       setIsLoading(false)
     })()
   }, [])
-
-  let text = 'Tour loading...'
   
-  if (errorMsg) {
-    text = errorMsg
-  } else if (latitude || longitude) {
-    text = latitude, longitude
-  }
+  if (errorMsg) return <Text>{erroMsg}</Text>
 
   while(isLoading){
-    return <Text>{text}</Text>
+    return <Text>Joining {tourId}</Text>
   }
 
   return <>
-    <View style={styles.mapContainer}>
-      <MapView
-        style={styles.map} 
-        showsUserLocation
-        showsPointsOfInterest={false}
-        showsBuildings={false}
-        provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: latitude,
-          longitude: longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }}
-      >
-      </MapView>
-    </View>
-    </>
+  <View style={styles.mapContainer}>
+    <MapView
+      style={styles.map} 
+      showsUserLocation
+      showsPointsOfInterest={false}
+      showsBuildings={false}
+      provider={PROVIDER_GOOGLE}
+      initialRegion={{
+        latitude: latitude,
+        longitude: longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421
+      }}
+    >
+    </MapView>
+  </View>
+  </>
 }
 
 export default Map

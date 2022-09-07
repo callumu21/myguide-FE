@@ -8,7 +8,7 @@ import MyTours from "./tour-organiser/MyTours";
 
 const input = React.createRef();
 
-const Home = ({navigation,}) => {
+const Home = ({navigation: {navigate}}) => {
 
   const [tourId, setTourId] = useState()
 
@@ -17,7 +17,7 @@ const Home = ({navigation,}) => {
     if(!tourId || tourId.match(/[^0-9]/g, '') || tourId.length < 6){
       input.current.shake()
     } else {
-      navigation.navigate('JoinTour')
+      navigate('Tour', {tourId})
     }
   }
 
@@ -29,7 +29,7 @@ const Home = ({navigation,}) => {
         onPress={getTourById}
         style={styles}
       />
-      <Button title="My Tours" onPress={() => navigation.navigate('MyTours') } style={'flex: 1'}></Button>
+      <Button title="My Tours" onPress={() => navigate('MyTours') } style={'flex: 1'}></Button>
   </View>
 
 };
