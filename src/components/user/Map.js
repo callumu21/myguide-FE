@@ -5,11 +5,14 @@ import { View, Text } from "react-native"
 import * as Location from "expo-location"
 import { Marker } from "react-native-maps"
 import { getSitesByTour } from '../../utils/api'
+import SiteCard from './SiteCard'
 
-const Map = ({tourData}) => {
+const Map = ({tourData, setUserLatitude, setUserLongitude}) => {
   const [errorMsg, setErrorMsg] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [tourMarkers, setTourMarkers] = useState()
+  const [site, setSite] = useState()
+  const [visible, setVisible] = useState(false)
 
   useEffect(() => {
     const setUserLocation = async () => {
@@ -34,7 +37,13 @@ const Map = ({tourData}) => {
 
   while(isLoading){
     return <Text>Joining {tourData.tourName}</Text>
-  }  
+  }
+
+  const getSiteCard = (event) => {
+    const siteMarker = event.target._internalFiberInstanceHandleDEV.memoizedProps.site
+    setSite(siteMarker)
+    setVisible(!visible);
+  }
 
   return <>
   <View style={styles.mapContainer}>
@@ -51,15 +60,19 @@ const Map = ({tourData}) => {
         longitudeDelta: 0.0421
       }}
     >
-    {tourMarkers.map(({siteId, siteName, siteDescription, latitude, longitude}) => {
+    {tourMarkers.map((site) => {
+      const {siteId, siteName, siteDescription, latitude, longitude} = site;
       return <Marker 
         key={siteId}
+        site={site}
         coordinate={{latitude, longitude}}
         title={siteName}
         description={siteDescription}
+        onPress={getSiteCard}
       />
     })}
     </MapView>
+    <SiteCard visible={visible} setVisible={setVisible} getSiteCard={getSiteCard} site={site}/>
   </View>
   </>
 }
