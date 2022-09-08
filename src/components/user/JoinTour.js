@@ -12,11 +12,14 @@ const JoinTour = ({route}) => {
   const tourId = route.params.tourId
   const [hasStarted, setHasStarted] = useState(false)
   const [tour, setTour] = useState({})
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
+
     const getTour = async () => {
       const tour = await getTourById(tourId)
       setTour(tour);
+      setIsLoading(false)
     }
     getTour()
   }, [])
@@ -26,6 +29,13 @@ const JoinTour = ({route}) => {
   }
   
   const {tourCode, tourName, tourDescription, tourImage} = tour;
+
+  while(isLoading){
+    return <>
+      <Text>Tour Loading...</Text>
+      <Button loading></Button>
+    </>
+  }
 
   while(!hasStarted){
     return <View style={{alignItems: 'center', textAlign: 'center'}}>
@@ -39,7 +49,7 @@ const JoinTour = ({route}) => {
 
   return  <Tab.Navigator>
     <Tab.Screen name="Tour Map" children={()=><Map tourData={tour} />}/>
-    <Tab.Screen name="Tour Sites" component={SitesTab} />
+    <Tab.Screen name="Tour Sites" children={()=><SitesTab tourData={tour} />} />
   </Tab.Navigator>
 };
 
