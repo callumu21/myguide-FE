@@ -1,57 +1,71 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
-import { Link } from "@react-navigation/native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Text, ListItem, Avatar, Button } from "@rneui/themed";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { fetchSites } from "../../../utils/api";
+
+
+const Tab = createBottomTabNavigator();
 
 const Sites = () => {
-    const navigation = useNavigation();
-    
-  const list = [
-    {
-      id: 1,
-      name: "Site 1",
-      site_url: "https://",
-      subtitle: "Little snippet about site 1",
-    },
-    {
-      id: 2,
-      name: "Site 2",
-      site_url: "https://",
-      subtitle: "Little snippet about site 2",
-    },
+  const navigation = useNavigation();
+  const [sites, setSites] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const author_id = 2
 
-    {
-      id: 3,
-      name: "Site 3",
-      site_url: "http://",
-      subtitle: "Little snipper about site 3",
-    },
-  ];
+  useEffect(() => {
+    fetchSites(author_id)
+      .then(({ data }) => {
+        setLoading(false);
+        setError(null);
+        setSites(data);
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+      });
+  }, [author_id]);
 
-  const [sites, setSites] = useState(list);
-
-  const handlePress = () => {
-    console.log("Hey");
-  };
-
-  return (
-    <View style={style.container}>
+  if (loading) {
+    return (
+      <View style={style.container}>
       <Text h4>My Sites</Text>
-      {list.map((l, i) => (
+      <Text>Loading...</Text>
+    </View>
+    )
+  }
+
+  if (error) {
+      return (
+        <View style={style.container}>
+          <Text>{error.msg}</Text>
+        </View>
+      );
+    }
+  
+  return (
+    <ScrollView style={style.container}>
+      {sites.map((l, i) => (
         <ListItem key={i} bottomDivider style={style.listitem}>
-          <Avatar source={{ uri: l.site_url }} />
+          <Avatar source={{ uri: l.siteImage }} />
           <ListItem.Content>
             <Text>{l.id}</Text>
-            <ListItem.Title>{l.name}</ListItem.Title>
-            <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
-                  {/* <Link to={{ screen: "EditSiteForm", params: { id: l.id } }}>Edit Link</Link> */}
-                  {/* <Button title="Edit Button" onPress={() => {navigation.navigate('EditSiteForm', {id: l.id})}}></Button> */}
-                  <Button title="Edit Button" onPress={() => {}}></Button>
+            <ListItem.Title>{l.siteName}</ListItem.Title>
+            <ListItem.Subtitle>{l.siteDescription}</ListItem.Subtitle>
+            <Text>{l.updatedAt}</Text>
+            {/* <Link to={{ screen: "EditSiteForm", params: { id: l.id } }}>Edit Link</Link> */}
+            <Button
+              title="Edit"
+              onPress={() => {
+                navigation.navigate("EditSiteForm", { id: l.siteId });
+              }}
+            ></Button>
           </ListItem.Content>
         </ListItem>
       ))}
-    </View>
+    </ScrollView>
   );
 };
 
