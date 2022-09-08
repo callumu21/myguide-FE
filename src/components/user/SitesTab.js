@@ -7,7 +7,6 @@ const SitesTab = ({tourData}) => {
 
     const [siteInfo, setSiteInfo] = useState()
     const [isLoading, setIsLoading] = useState(true)
-    const [expanded, setExpanded] = useState({})
     
     useEffect(() => {
         const getSiteInfo = async () => {

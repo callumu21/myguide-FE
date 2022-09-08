@@ -8,8 +8,6 @@ import { getSitesByTour } from '../../utils/api'
 
 const Map = ({tourData}) => {
   const [errorMsg, setErrorMsg] = useState(null)
-  // const [latitude, setLatitude] = useState(0)
-  // const [longitude, setLongitude] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [tourMarkers, setTourMarkers] = useState()
 
@@ -20,9 +18,6 @@ const Map = ({tourData}) => {
         setErrorMsg("Permission to access location was denied. Please enable location data.")
         return
       }
-    //   let currentPosition = await Location.getCurrentPositionAsync({})
-    //   setLatitude(currentPosition.coords.latitude)
-    //   setLongitude(currentPosition.coords.longitude)
       populateTourMarkers()
     }
 
