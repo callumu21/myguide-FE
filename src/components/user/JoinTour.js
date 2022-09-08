@@ -37,6 +37,10 @@ const JoinTour = ({route}) => {
     </>
   }
 
+  if(typeof tour === 'string'){
+    return <Text>{tour}</Text>
+  }
+
   while(!hasStarted){
     return <View style={{alignItems: 'center', textAlign: 'center'}}>
     <Text style={{fontSize: 50}}>{tourName}</Text>

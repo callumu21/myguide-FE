@@ -4,9 +4,9 @@ import MapView, { PROVIDER_GOOGLE } from "react-native-maps"
 import { View, Text } from "react-native"
 import * as Location from "expo-location"
 import { Marker } from "react-native-maps"
-import { getSitesById } from '../../utils/api'
+import { getSitesByTour } from '../../utils/api'
 
-const Map = ({tourId}) => {
+const Map = ({tourData}) => {
   const [errorMsg, setErrorMsg] = useState(null)
   // const [latitude, setLatitude] = useState(0)
   // const [longitude, setLongitude] = useState(0)
@@ -27,7 +27,7 @@ const Map = ({tourId}) => {
     }
 
     const populateTourMarkers = async () => {
-      const tourSites = await getSitesById();
+      const tourSites = await getSitesByTour(tourData.tourSites);
       setTourMarkers(tourSites)
       setIsLoading(false)
     }
@@ -38,7 +38,7 @@ const Map = ({tourId}) => {
   if (errorMsg) return <Text>{errorMsg}</Text>
 
   while(isLoading){
-    return <Text>Joining {tourId}</Text>
+    return <Text>Joining {tourData.tourName}</Text>
   }  
 
   return <>

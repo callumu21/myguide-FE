@@ -1,9 +1,9 @@
 import { Icon, Text, ListItem, Image } from "@rneui/themed"
 import { useEffect, useState } from "react";
 import { Linking } from "react-native";
-import { getSitesById } from "../../utils/api";
+import { getSitesByTour } from "../../utils/api";
 
-const SitesTab = ({tourData: {tourSites}}) => {
+const SitesTab = ({tourData}) => {
 
     const [siteInfo, setSiteInfo] = useState()
     const [isLoading, setIsLoading] = useState(true)
@@ -11,7 +11,7 @@ const SitesTab = ({tourData: {tourSites}}) => {
     
     useEffect(() => {
         const getSiteInfo = async () => {
-            const tourSites = await getSitesById();
+            const tourSites = await getSitesByTour(tourData.tourSites);
             setSiteInfo(tourSites)
             setIsLoading(false)
             }
