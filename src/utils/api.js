@@ -11,3 +11,12 @@ export const getSitesByTour = async (siteArray) => {
     const {data} = await axios.get(`https://myguidebackend.onrender.com/sites`, {params: {site_ids: [siteArray]}})
     return data
 }
+
+export const fetchSites = async (author_id) => {
+    try {
+        const data = await axios.get(`https://myguidebackend.onrender.com/sites`, {params: {author_id: author_id}})
+    return data;
+    } catch (error) {
+    throw error.response.data;
+  }
+};
