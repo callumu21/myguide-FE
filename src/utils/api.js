@@ -14,8 +14,26 @@ export const getSitesByTour = async (siteArray) => {
 
 export const fetchSites = async (author_id) => {
     try {
-        const data = await axios.get(`https://myguidebackend.onrender.com/sites`, {params: {author_id: author_id}})
+        const data = await axios.get(`https://myguidebackend.onrender.com/sites`, {params: {author_id}})
     return data;
+    } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const fetchSiteById = async (site_Id) => {
+    try {
+        const site = await axios.get(`https://myguidebackend.onrender.com/sites/${site_Id}`)
+    return site.data;
+    } catch (error) {
+    throw error.response.data;
+  }
+};
+
+export const updateSiteById = async (site_Id, updateData) => {
+    try {
+        const site = await axios.patch(`https://myguidebackend.onrender.com/sites/${site_Id}`, updateData)
+    return site.data;
     } catch (error) {
     throw error.response.data;
   }
