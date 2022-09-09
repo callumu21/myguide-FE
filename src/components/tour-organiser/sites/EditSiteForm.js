@@ -38,7 +38,7 @@ const EditSiteForm = ({ route }) => {
         setLoading(false);
         setError(error);
       });
-  }, [site]);
+  }, [id]);
 
   useEffect(() => {
     reset(site);
