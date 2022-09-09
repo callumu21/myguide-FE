@@ -3,25 +3,13 @@ import { Input, Text } from "@rneui/themed";
 import React from "react";
 import { View, Button, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import Tours from "../Tours";
-import Sites from "./Sites";
-// import axios from "axios";
+import { fetchSiteById, updateSiteById } from "../../../utils/api";
 
 const EditSiteForm = ({ route }) => {
   const { id } = route.params;
-
-  const preloadedValues = {
-    siteId: id,
-    siteName: `Test Site ${id}`,
-    siteDescription: `Test Description for site ${id}`,
-    siteImage: "http://",
-    siteAddress: `Test address for site ${id}`,
-    contactInfo: `Test contact info for site ${id}`,
-    websiteLink: `www.testwebsiteforsite${id}.com`,
-  };
-
-  const [site, setSite] = useState(preloadedValues);
-  // const [loading, setLoading] = useState(true);
+  const [site, setSite] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   const {
     control,
@@ -29,61 +17,54 @@ const EditSiteForm = ({ route }) => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: { preloadedValues },
+    defaultValues: { site },
   });
 
-  //   const fetchSiteById = async () => {
-  //     try {
-  //       const data = await axios.get(
-  //         `https://myguidebackend.onrender.com/sites/${id}`
-  //       );
-  //       return data;
-  //     } catch (error) {
-  //       throw error;
-  //     }
-  //   };
-
-  //   useEffect(() => {
-  //     fetchSiteById()
-  //       .then(({ data }) => {
-  //         setLoading(false);
-  //         setSiteById(data);
-  //       })
-  //       .catch((error) => {
-  //         setError({ error });
-  //       });
-  //   }, []);
-
-  //   useEffect(() => {
-  //     fetchSiteById()
-  //       .then(({ data }) => {
-  //         setLoading(false);
-  //         setSiteById(data);
-  //       })
-  //       .catch((error) => {
-  //         setError({ error });
-  //       });
-  //   }, []);
+  useEffect(() => {
+    fetchSiteById(id)
+      .then((data) => {
+        setLoading(false);
+        setError(null);
+        setSite({
+          siteName: data[0].siteName,
+          siteImage: data[0].siteImage,
+          contactInfo: data[0].contactInfo,
+          siteAddress: data[0].siteAddress,
+          siteDescription: data[0].siteDescription,
+          websiteLink: data[0].websiteLink,
+        });
+      })
+      .catch((error) => {
+        setLoading(false);
+        setError(error);
+      });
+  }, [id]);
 
   useEffect(() => {
-    // simulate async api call with set timeout
-    setTimeout(() => setSite(preloadedValues), 1000);
-  }, []);
-
-  useEffect(() => {
-    // reset form with user data
     reset(site);
   }, [site]);
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    updateSiteById(id, data)
+    
+  }
 
-//   if (loading) {
-//     return (
-//       <View style={style.container}>
-//         <Text>Loading...</Text>
-//       </View>
-//     );
-//   }
+  if (loading) {
+    return (
+      <View>
+        <Text h4>My Sites</Text>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View>
+        <Text>Error</Text>
+      </View>
+    );
+  }
 
   return (
     <View>
