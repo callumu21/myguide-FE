@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Text, ListItem, Avatar, Button } from "@rneui/themed";
+import { Text, ListItem, Avatar, Button, Icon } from "@rneui/themed";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { fetchSites } from "../../../utils/api";
-
 
 const Tab = createBottomTabNavigator();
 
@@ -13,7 +12,7 @@ const Sites = () => {
   const [sites, setSites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const author_id = 2
+  const author_id = 1;
 
   useEffect(() => {
     fetchSites(author_id)
@@ -26,45 +25,66 @@ const Sites = () => {
         setLoading(false);
         setError(error);
       });
-  }, [author_id]);
+  }, [author_id, sites]);
 
   if (loading) {
     return (
-      <View style={style.container}>
-      <Text h4>My Sites</Text>
-      <Text>Loading...</Text>
-    </View>
-    )
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
   }
 
   if (error) {
-      return (
-        <View style={style.container}>
-          <Text>{error.msg}</Text>
-        </View>
-      );
-    }
-  
+    return (
+      <View>
+        <Text>{error.msg}</Text>
+      </View>
+    );
+  }
+
   return (
-    <ScrollView style={style.container}>
-      {sites.map((l, i) => (
-        <ListItem key={i} bottomDivider style={style.listitem}>
-          <Avatar source={{ uri: l.siteImage }} />
-          <ListItem.Content>
-            <Text>{l.id}</Text>
-            <ListItem.Title>{l.siteName}</ListItem.Title>
-            <ListItem.Subtitle>{l.siteDescription}</ListItem.Subtitle>
-            <Text>{l.updatedAt}</Text>
-            {/* <Link to={{ screen: "EditSiteForm", params: { id: l.id } }}>Edit Link</Link> */}
-            <Button
-              title="Edit"
-              onPress={() => {
-                navigation.navigate("EditSiteForm", { id: l.siteId });
-              }}
-            ></Button>
-          </ListItem.Content>
-        </ListItem>
-      ))}
+    <ScrollView>
+      {sites.map(
+        ({ siteImage, siteName, siteDescription, updatedAt, siteId }, i) => (
+          <ListItem.Swipeable
+            key={i}
+            bottomDivider
+            leftContent={(reset) => (
+              <Button
+                onPress={() => reset()}
+                icon={{ name: "info-circle", type: "font-awesome-5", color: "white" }}
+                buttonStyle={{ minHeight: "100%" }}
+              />
+            )}
+            rightContent={(reset) => (
+              <Button
+                onPress={() => reset()}
+                icon={{ name: "trash", type: "font-awesome-5", color: "white" }}
+                buttonStyle={{
+                  minHeight: "100%",
+                  backgroundColor: "red",
+                }}
+              />
+            )}
+          >
+            <Avatar source={{ uri: siteImage }} />
+            <ListItem.Content>
+              <Text>Site ID: {siteId}</Text>
+              <ListItem.Title>{siteName}</ListItem.Title>
+              <ListItem.Subtitle>{siteDescription}</ListItem.Subtitle>
+              <Text>Last updated @ {updatedAt}</Text>
+              {/* <Link to={{ screen: "EditSiteForm", params: { id: siteId } }}>Edit Link</Link> */}
+              <Button
+                title="Edit"
+                onPress={() => {
+                  navigation.navigate("EditSiteForm", { id: siteId });
+                }}
+              ></Button>
+            </ListItem.Content>
+          </ListItem.Swipeable>
+        )
+      )}
     </ScrollView>
   );
 };
