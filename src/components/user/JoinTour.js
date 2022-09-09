@@ -13,8 +13,6 @@ const JoinTour = ({route}) => {
   const [hasStarted, setHasStarted] = useState(false)
   const [tour, setTour] = useState({})
   const [isLoading, setIsLoading] = useState(true)
-  const [userLatitude, setUserLatitude] = useState(null)
-  const [userLongitude, setUserLongitude] = useState(null)
 
   useEffect(() => {
 
@@ -54,8 +52,8 @@ const JoinTour = ({route}) => {
   }
 
   return  <Tab.Navigator>
-    <Tab.Screen name="Tour Map" children={()=><Map tourData={tour} setUserLatitude={setUserLatitude} setUserLongitude={setUserLongitude}/>}/>
-    <Tab.Screen name="Tour Sites" children={()=><SitesTab tourData={tour} userLatitude={userLatitude} userLongitude={userLongitude}/>} />
+    <Tab.Screen name="Tour Map" children={()=><Map tourData={tour}/>}/>
+    <Tab.Screen name="Tour Sites" children={()=><SitesTab tourData={tour}/>} />
   </Tab.Navigator>
 };
 

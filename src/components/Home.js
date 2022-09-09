@@ -1,12 +1,11 @@
-import { Text, View } from "react-native" 
+import { ImageBackground, Text, View } from "react-native" 
 import { Button, Input } from '@rneui/themed'
 import styles from '../stylesheets/home.js'
 import React from "react";
 import {useState} from 'react'
-import JoinTour from "./user/JoinTour";
-import MyTours from "./tour-organiser/MyTours";
 
 const input = React.createRef();
+const background = { uri: "https://www.countrywalkers.com/content/uploads/2019/04/CW_June_8-14__2016-5614-crop-1638283854-1800x943.jpg" }
 
 const Home = ({navigation: {navigate}}) => {
 
@@ -21,16 +20,13 @@ const Home = ({navigation: {navigate}}) => {
     }
   }
 
-  return <View style={styles.container}>
-
-      <Input ref={input} placeholder='Tour ID' style={styles} maxLength={6} onChangeText={(text) => setTourId(text)}></Input>
-      <Button
-        title="Join Tour"
-        onPress={getTourById}
-        style={styles}
-      />
-      <Button title="My Tours" onPress={() => navigate('MyTours') } style={'flex: 1'}></Button>
-  </View>
+  return <ImageBackground source={background} resizeMode='cover' style={{height: '100%'}}>
+      <View style={styles.container}>
+        <Input ref={input} placeholder='Tour ID' maxLength={6} onChangeText={(text) => setTourId(text)} keyboardType='numeric'></Input>
+        <Button title="Join Tour" onPress={getTourById} />
+        <Button title="My Tours" onPress={() => navigate('MyTours') } style={'flex: 1'}></Button>
+      </View>
+    </ ImageBackground>
 
 };
 
