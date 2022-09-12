@@ -1,6 +1,6 @@
 import { Icon, Text, ListItem, Image } from "@rneui/themed"
 import { useEffect, useState } from "react";
-import { Linking } from "react-native";
+import { Linking, ScrollView } from "react-native";
 import { getSitesByTour } from "../../utils/api";
 
 const SitesTab = ({tourData}) => {
@@ -18,7 +18,9 @@ const SitesTab = ({tourData}) => {
     }, [])
 
     if(isLoading) return <Text>Loading sites...</Text>
-    return siteInfo.map(({siteId, siteName, siteDescription, siteImage, siteAddress, contactInfo, websiteLink}) => (
+    
+    return <ScrollView>
+    {siteInfo.map(({siteId, siteName, siteDescription, siteImage, siteAddress, contactInfo, websiteLink}) => (
         <ListItem key={siteId} bottomDivider>
                 <Image source={{uri:siteImage}} style={{height: 100, width: 100}}/>
                 <ListItem.Content>
@@ -31,6 +33,7 @@ const SitesTab = ({tourData}) => {
                 </Text>
                 </ListItem.Content>
             </ListItem>
-    ))
+    ))}
+    </ScrollView>
 }
 export default SitesTab
