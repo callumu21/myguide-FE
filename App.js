@@ -10,6 +10,7 @@ import { Button, createTheme, Image, ThemeProvider } from '@rneui/themed';
 import theme from './src/stylesheets/theme-provider'
 import EditSiteForm from './src/components/tour-organiser/sites/EditSiteForm';
 import { View } from 'react-native';
+import styles from './src/stylesheets/home';
 
 const logo = require('./src/assets/img/logo.png')
 
@@ -21,7 +22,9 @@ export default function App() {
         <Stack.Navigator 
           screenOptions={{
               headerTitle: () => (
-                  <Image source={''} style={{height: 40, width: 100, resizeMode: 'contain', left: 100}}/>
+                <View style={styles.logoContainer}>
+                  <Image source={logo} style={styles.logo}/>
+                </View>
               ),
       }}>
           <Stack.Screen name="Home" component={Home} options={{}}/>
@@ -35,3 +38,4 @@ export default function App() {
     </ThemeProvider>
   );
 }
+
