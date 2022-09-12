@@ -15,11 +15,15 @@ const JoinTour = ({route}) => {
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-
     const getTour = async () => {
+      try {
       const tour = await getTourById(tourId)
       setTour(tour);
       setIsLoading(false)
+      } catch (error) {
+        setTour(error.msg)
+        setIsLoading(false)
+      }
     }
     getTour()
   }, [])
@@ -27,8 +31,6 @@ const JoinTour = ({route}) => {
   const startTour = () => {
     setHasStarted(true)
   }
-  
-  const {tourCode, tourName, tourDescription, tourImage} = tour;
 
   while(isLoading){
     return <>
@@ -40,6 +42,8 @@ const JoinTour = ({route}) => {
   if(typeof tour === 'string'){
     return <Text>{tour}</Text>
   }
+  
+  const {tourCode, tourName, tourDescription, tourImage} = tour;
 
   while(!hasStarted){
     return <View style={{alignItems: 'center', textAlign: 'center'}}>
