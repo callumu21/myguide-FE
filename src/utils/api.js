@@ -10,7 +10,7 @@ export const getTourById = async (tourId) => {
 }
 
 export const getSitesByTour = async (siteArray) => {
-    const {data} = await axios.get(`https://myguidebackend.onrender.com/sites`, {params: {site_ids: [siteArray]}})
+    const {data} = await axios.get(`https://myguidebackend.onrender.com/sites`, {params: {site_id: [siteArray]}})
     return data
 }
 
