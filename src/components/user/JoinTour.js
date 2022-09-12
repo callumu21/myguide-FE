@@ -38,7 +38,7 @@ const JoinTour = ({route}) => {
       <Button loading></Button>
     </>
   }
-  console.log(typeof tour, {tour})
+
   if(typeof tour === 'string'){
     return <Text>{tour}</Text>
   }
