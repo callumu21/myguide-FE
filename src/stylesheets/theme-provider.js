@@ -12,7 +12,10 @@ const theme = createTheme({
             }
         },
         Input: {
-            color: 'white'
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            borderRadius: 100,
+            paddingLeft: 20,
+            width: 30,
         }
     }
   })

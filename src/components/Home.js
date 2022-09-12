@@ -20,11 +20,11 @@ const Home = ({navigation: {navigate}}) => {
     }
   }
 
-  return <ImageBackground source={background} resizeMode='cover' style={{height: '100%'}}>
+  return <ImageBackground style={styles.ImageBackground} source={background} resizeMode='cover'>
       <View style={styles.container}>
         <Input ref={input} placeholder='Tour ID' maxLength={6} onChangeText={(text) => setTourId(text)} keyboardType='numeric'></Input>
         <Button title="Join Tour" onPress={getTourById} />
-        <Button title="My Tours" onPress={() => navigate('MyTours') } style={'flex: 1'}></Button>
+        <Button title="My Tours" onPress={() => navigate('MyTours')} ></Button>
       </View>
     </ ImageBackground>
 

@@ -21,7 +21,7 @@ export default function App() {
         <Stack.Navigator 
           screenOptions={{
               headerTitle: () => (
-                  <Image source={logo} style={{height: 40, width: 100, resizeMode: 'contain', marginLeft: 110}}/>
+                  <Image source={''} style={{height: 40, width: 100, resizeMode: 'contain', left: 100}}/>
               ),
       }}>
           <Stack.Screen name="Home" component={Home} options={{}}/>
@@ -35,4 +35,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
