@@ -68,12 +68,8 @@ const NewSiteForm = () => {
   };
 
   const pickImage = async () => {
-    const s3 = new AWS.S3({
-      accessKeyId: "AKIA4QLOQWKWRFITJZWO",
-      secretAccessKey: "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",
-    });
-
-    // Ask the user for the permission to access the media library
+  
+     // Ask the user for the permission to access the media library
     const medialibraryPermissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
