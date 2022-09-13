@@ -40,3 +40,30 @@ export const updateSiteById = async (site_Id, updateData) => {
     throw error.response.data;
   }
 };
+
+
+export const addNewSite = async (newSiteData) => {
+  try {
+    const site = await axios.post(
+      `https://myguidebackend.onrender.com/sites`,
+      newSiteData
+    );
+    return site.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+
+export const deleteSiteById = async (siteId) => {
+    console.log(siteId)
+  try {
+    const site = await axios.delete(
+      `https://myguidebackend.onrender.com/sites/${siteId}`
+    );
+    return site;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
