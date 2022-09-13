@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     map: {
       borderRadius: 4,
       width: '100%',
-      height: '95%',
+      height: '100%',
       zIndex: 1,
     }
 })

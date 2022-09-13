@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react'
 import { Text, View } from "react-native";
-import { Button, Image } from "@rneui/themed";
+import { Button, Image, Icon } from "@rneui/themed";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SitesTab from './SitesTab'
 import Map from './Map'
@@ -56,8 +56,30 @@ const JoinTour = ({route}) => {
   }
 
   return  <Tab.Navigator>
-    <Tab.Screen name="Tour Map" children={()=><Map tourData={tour}/>}/>
-    <Tab.Screen name="Tour Sites" children={()=><SitesTab tourData={tour}/>} />
+    <Tab.Screen 
+      name="Tour Map" 
+      options = {{
+        tabBarIcon: ({ color, size }) => (
+        <Icon
+          name="route"
+          type="font-awesome-5"
+          color={color}
+          size={size}
+        />
+      )}}
+
+      children={()=><Map tourData={tour}/>}/>
+    <Tab.Screen 
+    name="Tour Sites" 
+    options={{
+      tabBarIcon: ({ color, size }) => (
+      <Icon
+        name="landmark"
+        type="font-awesome-5"
+        color={color}
+        size={size}
+      />)}}
+    children={()=><SitesTab tourData={tour}/>} />
   </Tab.Navigator>
 };
 

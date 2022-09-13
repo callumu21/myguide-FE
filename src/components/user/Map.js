@@ -7,7 +7,7 @@ import { Marker } from "react-native-maps"
 import { getSitesByTour } from '../../utils/api'
 import SiteCard from './SiteCard'
 
-const Map = ({tourData, setUserLatitude, setUserLongitude}) => {
+const Map = ({tourData}) => {
   const [errorMsg, setErrorMsg] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [tourMarkers, setTourMarkers] = useState()
