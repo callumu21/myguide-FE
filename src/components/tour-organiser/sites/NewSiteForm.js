@@ -151,17 +151,14 @@ const NewSiteForm = () => {
             [
               {
                 text: "Back",
-                onPress: () => { },
+                onPress: () => {},
               },
             ]
           );
         }
-  
       }
-    )
-  }
-
-    
+    );
+  };
 
   if (loading) {
     return (
