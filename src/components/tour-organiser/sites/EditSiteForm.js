@@ -52,7 +52,6 @@ const EditSiteForm = ({ route }) => {
   if (loading) {
     return (
       <View>
-        <Text h4>My Sites</Text>
         <Text>Loading...</Text>
       </View>
     );
@@ -83,7 +82,7 @@ const EditSiteForm = ({ route }) => {
         )}
         name="siteName"
       />
-      {errors.firstName && <Text>This is required.</Text>}
+      {errors.siteName && <Text>This is required.</Text>}
 
       <Controller
         control={control}
