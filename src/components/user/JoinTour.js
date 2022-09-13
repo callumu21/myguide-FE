@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SitesTab from './SitesTab'
 import Map from './Map'
 import { getTourById } from "../../utils/api";
+import Loading from '../../utils/Loading';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,7 +35,7 @@ const JoinTour = ({route}) => {
 
   while(isLoading){
     return <>
-      <Text>Tour Loading...</Text>
+      <Loading loadMessage={'Tour Loading'} />
       <Button loading></Button>
     </>
   }
