@@ -56,7 +56,10 @@ const JoinTour = ({route}) => {
     </View>
   }
 
-  return  <Tab.Navigator>
+  return  <Tab.Navigator
+    screenOptions={{
+        headerTitleAlign: 'center'
+    }}>
     <Tab.Screen 
       name={`${tourName}`}
       options = {{
