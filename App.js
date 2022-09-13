@@ -25,7 +25,7 @@ export default function App() {
                 <View style={styles.logoContainer}>
                   <Image source={logo} style={styles.logo}/>
                 </View>
-              ),
+              )
       }}>
           <Stack.Screen name="Home" component={Home} options={{}}/>
           

@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react'
-import { Text, View } from "react-native";
-import { Button, Image, Icon } from "@rneui/themed";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Text, View } from "react-native"
+import { Button, Image, Icon } from "@rneui/themed"
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import SitesTab from './SitesTab'
 import Map from './Map'
-import { getTourById } from "../../utils/api";
-import Loading from '../../utils/Loading';
+import { getTourById } from "../../utils/api"
+import Loading from '../../utils/Loading'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 const JoinTour = ({route}) => {
   const tourId = route.params.tourId
@@ -56,9 +56,12 @@ const JoinTour = ({route}) => {
     </View>
   }
 
-  return  <Tab.Navigator>
+  return  <Tab.Navigator
+    screenOptions={{
+        headerTitleAlign: 'center'
+    }}>
     <Tab.Screen 
-      name="Tour Map" 
+      name={`${tourName}`}
       options = {{
         tabBarIcon: ({ color, size }) => (
         <Icon
@@ -68,10 +71,9 @@ const JoinTour = ({route}) => {
           size={size}
         />
       )}}
-
       children={()=><Map tourData={tour}/>}/>
     <Tab.Screen 
-    name="Tour Sites" 
+    name={`${tourName} Sites`}
     options={{
       tabBarIcon: ({ color, size }) => (
       <Icon
