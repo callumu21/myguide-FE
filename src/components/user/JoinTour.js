@@ -1,13 +1,13 @@
 import {useEffect, useState} from 'react'
-import { Text, View } from "react-native";
-import { Button, Image, Icon } from "@rneui/themed";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Text, View } from "react-native"
+import { Button, Image, Icon } from "@rneui/themed"
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import SitesTab from './SitesTab'
 import Map from './Map'
-import { getTourById } from "../../utils/api";
-import styles from '../../stylesheets/join-tour';
+import { getTourById } from "../../utils/api"
+import Loading from '../../utils/Loading'
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 const JoinTour = ({route}) => {
   const tourId = route.params.tourId
@@ -35,7 +35,7 @@ const JoinTour = ({route}) => {
 
   while(isLoading){
     return <>
-      <Text>Tour Loading...</Text>
+      <Loading loadMessage={'Tour Loading'} />
       <Button loading></Button>
     </>
   }

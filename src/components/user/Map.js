@@ -6,6 +6,7 @@ import * as Location from "expo-location"
 import { Marker } from "react-native-maps"
 import { getSitesByTour } from '../../utils/api'
 import SiteCard from './SiteCard'
+import Loading from '../../utils/Loading'
 
 const Map = ({tourData}) => {
   const [errorMsg, setErrorMsg] = useState(null)
@@ -36,7 +37,7 @@ const Map = ({tourData}) => {
   if (errorMsg) return <Text>{errorMsg}</Text>
 
   while(isLoading){
-    return <Text>Joining {tourData.tourName}</Text>
+    return <Loading loadMessage={`Joining ${tourData.tourName}`} />
   }
 
   const getSiteCard = (event) => {

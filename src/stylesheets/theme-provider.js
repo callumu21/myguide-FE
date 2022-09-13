@@ -1,4 +1,4 @@
-import { createTheme } from "@rneui/themed"
+import { createTheme, LinearProgress } from "@rneui/themed"
 
 const theme = createTheme({
     components: {
