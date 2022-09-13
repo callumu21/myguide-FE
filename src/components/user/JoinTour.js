@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SitesTab from './SitesTab'
 import Map from './Map'
 import { getTourById } from "../../utils/api";
+import styles from '../../stylesheets/join-tour';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +58,7 @@ const JoinTour = ({route}) => {
 
   return  <Tab.Navigator>
     <Tab.Screen 
-      name="Tour Map" 
+      name={`${tourName}`}
       options = {{
         tabBarIcon: ({ color, size }) => (
         <Icon
@@ -67,10 +68,9 @@ const JoinTour = ({route}) => {
           size={size}
         />
       )}}
-
       children={()=><Map tourData={tour}/>}/>
     <Tab.Screen 
-    name="Tour Sites" 
+    name={`${tourName} Sites`}
     options={{
       tabBarIcon: ({ color, size }) => (
       <Icon
