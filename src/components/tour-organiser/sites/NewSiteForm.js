@@ -51,8 +51,9 @@ const NewSiteForm = () => {
   };
 
   const backFromLocation = () => {
-    setMarker([siteCoords]);
-    toggleCoordsOverlay();
+    siteCoords
+      ? (setMarker([siteCoords]), toggleCoordsOverlay())
+      : toggleCoordsOverlay();
   };
 
   const saveLocation = () => {
