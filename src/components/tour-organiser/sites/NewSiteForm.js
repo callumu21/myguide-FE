@@ -1,9 +1,9 @@
 import { useState, useEffect, React } from "react";
 // prettier-ignore
-import { Text, View, Alert, StyleSheet, ScrollView, Button } from "react-native";
+import { Text, View, Alert, StyleSheet, ScrollView, Button, Image } from "react-native";
 import { Overlay, Input, Icon, ButtonGroup } from "@rneui/themed";
 import { useForm, Controller } from "react-hook-form";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
 import { addNewSite } from "../../../utils/api";
 import { useNavigation } from "@react-navigation/native";
@@ -17,11 +17,13 @@ const NewSiteForm = () => {
   const [status, setStatus] = useState();
   const [userLocation, setUserLocation] = useState();
   const [loading, setLoading] = useState(true);
-  const [siteCoords, setSiteCoords] = useState();
+  const [siteCoords, setSiteCoords] = useState(null);
+  const [marker, setMarker] = useState([]);
   const [visible, setVisible] = useState(false);
   // prettier-ignore
   const { control, handleSubmit, reset, setValue, formState: { errors }, } = useForm({ defaultValues: {} });
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [image, setImage] = useState(null);
   const [imageInfo, setImageInfo] = useState();
   const authorId = 1;
 
@@ -33,7 +35,6 @@ const NewSiteForm = () => {
         setLoading(false);
         return;
       } else {
-        console.log("Access granted!!");
         setStatus(status);
 
         let { coords } = await Location.getCurrentPositionAsync({});
@@ -49,27 +50,19 @@ const NewSiteForm = () => {
     setVisible(!visible);
   };
 
-  const getCoords = () => {
-    if (!siteCoords) {
-      Alert.alert(
-        "Coordinates not obtained!",
-        `Please go back to the previous screen and click on the site location on the map`,
-        [{ text: "Back" }]
-      );
-    } else {
-      Alert.alert(
-        "Coordinates obtained!",
-        `Latitude: ${String(siteCoords.latitude)} \nLongitude: ${String(
-          siteCoords.longitude
-        )} \n `,
-        [{ text: "Close" }]
-      );
-    }
+  const backFromLocation = () => {
+    siteCoords
+      ? (setMarker([siteCoords]), toggleCoordsOverlay())
+      : toggleCoordsOverlay();
+  };
+
+  const saveLocation = () => {
+    setSiteCoords(marker[0]);
+    toggleCoordsOverlay();
   };
 
   const pickImage = async () => {
-  
-     // Ask the user for the permission to access the media library
+    // Ask the user for the permission to access the media library
     const medialibraryPermissionResult =
       await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -79,7 +72,7 @@ const NewSiteForm = () => {
     }
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -93,6 +86,7 @@ const NewSiteForm = () => {
       picture = await picture.blob();
       const imageData = new File([picture], `photo.${imageExt}`);
       setImageInfo(imageData);
+      setImage(result.uri);
       setValue("siteImage", imagePath);
     }
   };
@@ -102,7 +96,8 @@ const NewSiteForm = () => {
     const newSiteData = {
       ...data,
       siteImage: `https://myguideimages.s3.eu-west-2.amazonaws.com/${imageName}.jpg`,
-      ...siteCoords,
+      latitude: siteCoords.latlng.latitude,
+      longitude: siteCoords.latlng.longitude,
       authorId,
     };
 
@@ -126,6 +121,8 @@ const NewSiteForm = () => {
               onPress: () => {
                 setSiteCoords();
                 setImageInfo();
+                setImage();
+                setMarker([]);
                 reset();
                 navigation.navigate("Sites");
               },
@@ -135,11 +132,13 @@ const NewSiteForm = () => {
               onPress: () => {
                 setSiteCoords();
                 setImageInfo();
+                setImage();
+                setMarker([]);
                 reset();
               },
             },
           ]);
-        } catch (error) {
+        } catch (err) {
           setError(error.msg);
           Alert.alert(
             "There was an error adding your site!",
@@ -215,28 +214,39 @@ const NewSiteForm = () => {
             <View
               style={{
                 flexDirection: "row",
-                justifyContent: "flex-end",
+                justifyContent: image ? "space-between" : "center",
                 alignContent: "center",
-                marginLeft: 40,
-                marginRight: 8,
+                alignItems: "center",
+                marginLeft: image ? 10 : 0,
+                marginRight: image ? 20 : 0,
+                marginTop: 0,
+                marginBottom: image ? 10 : 0,
               }}
             >
-              <Input
-                placeholder="Site Image"
-                style={{ ...styles.input }}
-                onBlur={onBlur}
-                onChangeText={onChange}
-                value={value}
-                keyboardType="url"
-              />
-
+              {image && (
+                <Image
+                  source={{ uri: image }}
+                  style={{
+                    width: 200,
+                    height: 150,
+                    marginBottom: 20,
+                    marginTop: -10,
+                    margin: 5,
+                    borderColor: "black",
+                    borderStyle: "solid",
+                    borderWidth: 1,
+                    borderRadius: 10,
+                  }}
+                />
+              )}
               <Icon
                 color="grey"
                 name="camera"
                 onPress={pickImage}
-                size={40}
+                size={75}
                 type="font-awesome-5"
                 underlayColor="#fff"
+                style={{ marginBottom: 30, marginRight: 20 }}
               />
             </View>
           )}
@@ -320,15 +330,21 @@ const NewSiteForm = () => {
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421,
               }}
-              onPress={(event) => setSiteCoords(event.nativeEvent.coordinate)}
-            />
+              onPress={(event) => {
+                setMarker([{ latlng: event.nativeEvent.coordinate }]);
+              }}
+            >
+              {marker.map((marker, i) => (
+                <Marker coordinate={marker.latlng} key={i} />
+              ))}
+            </MapView>
           </View>
 
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
-            <Button title="Get Coordinates" onPress={getCoords} />
-            <Button title="Back" onPress={toggleCoordsOverlay} />
+            <Button title="Save Site Location" onPress={saveLocation} />
+            <Button title="Back" onPress={backFromLocation} />
           </View>
         </Overlay>
 
@@ -336,11 +352,12 @@ const NewSiteForm = () => {
           <ButtonGroup
             buttons={["SET SITE LOCATION", "RESET"]}
             selectedIndex={selectedIndex}
+            selectedButtonStyle={siteCoords ? { backgroundColor: "green" } : ""}
             onPress={(value) => {
               value === 0
                 ? toggleCoordsOverlay()
                 : value === 1
-                ? reset()
+                ? (reset(), setMarker([]), setSiteCoords(), setImage(null))
                 : null;
             }}
             containerStyle={{ marginBottom: 30 }}
