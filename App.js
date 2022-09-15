@@ -22,10 +22,11 @@ export default function App() {
         <Stack.Navigator 
           screenOptions={{
               headerTitle: () => (
-                <View style={styles.logoContainer}>
+                <View>
                   <Image source={logo} style={styles.logo}/>
                 </View>
-              )
+              ),
+              headerTitleAlign: 'center'
       }}>
           <Stack.Screen name="Home" component={Home} options={{}}/>
           

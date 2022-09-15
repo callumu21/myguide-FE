@@ -11,10 +11,25 @@ const styles = StyleSheet.create({
       height: '100%',
       zIndex: 1,
     },
-    
-    loadMessage: {
+    startTourContainer: {
+      alignItems: 'center',
+      height: '100%'
+    },
+    startTourTitle: {
+      fontSize: 40,
+      textAlign: 'center'
+    },
+    startTourImage: {
+      height: 200, 
+      width: 300,
+      margin: 10,
+      borderRadius: 10
+    },
+    startTourDescription: {
       textAlign: 'center',
-      fontSize: 20
+      fontStyle: 'italic',
+      margin: 10,
+      padding: 10,
     }
 })
 
