@@ -33,7 +33,7 @@ const Home = ({navigation: {navigate}}) => {
             }} 
           onChangeText={(text) => setTourId(text)} keyboardType='numeric'></Input>
         <Button title="Join Tour" onPress={getTourById} />
-        <Button title="My Tours" onPress={() => navigate('MyTours')} ></Button>
+        <Button title="Manage Sites/Tours" onPress={() => navigate('Admin')} ></Button>
       </View>
     </ ImageBackground>
 

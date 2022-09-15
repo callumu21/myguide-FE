@@ -9,55 +9,55 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { Text, ListItem, Button, Icon, Image, Overlay } from "@rneui/themed";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { fetchSites, deleteSiteById } from "../../../utils/api";
-import * as Linking from "expo-linking";
+import { fetchTours, deleteTourById } from "../../../utils/api";
 import moment from "moment";
 
 const Tab = createBottomTabNavigator();
 
-const Sites = () => {
+const Tours = () => {
   const navigation = useNavigation();
-  const [sites, setSites] = useState([]);
+  const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [visible, setVisible] = useState(false);
-  const [selectedSite, setSelectedSite] = useState({});
+  const [selectedTour, setSelectedTour] = useState({});
+  const [selectedTourSites, setSelectedTourSites] = useState([]);
   const author_id = 1;
 
   useEffect(() => {
-    fetchSites(author_id)
+    fetchTours(author_id)
       .then(({ data }) => {
         setLoading(false);
         setError(null);
-        setSites(data);
+        setTours(data);
       })
       .catch((error) => {
         setLoading(false);
         setError(error);
       });
-  }, [author_id, sites]);
+  }, [author_id, tours]);
 
-  const checkDelete = (siteId, siteName) => {
-    Alert.alert(`Are you sure you want to delete ${siteName}?`, "", [
-      {
-        text: "Yes",
-        onPress: () => {
-          deleteSiteById(siteId)
-            .then(() => {
-              Alert.alert(`Site deleted!`, "", [{ text: "Back" }]);
-            })
-            .catch((error) => {
-              setError(error);
-            });
-        },
-      },
-      { text: "No" },
-    ]);
-  };
-
-  const toggleSiteInfoOverlay = () => {
+  const toggleTourInfoOverlay = () => {
     setVisible(!visible);
   };
+
+    const checkDelete = (tourId, tourName) => {
+      Alert.alert(`Are you sure you want to delete ${tourName}?`, "", [
+        {
+          text: "Yes",
+          onPress: () => {
+            deleteTourById(tourId)
+              .then(() => {
+                Alert.alert(`Tour deleted!`, "", [{ text: "Back" }]);
+              })
+              .catch((error) => {
+                setError(error);
+              });
+          },
+        },
+        { text: "No" },
+      ]);
+    };
 
   if (loading) {
     return (
@@ -80,23 +80,27 @@ const Sites = () => {
       <Overlay
         overlayStyle={{ width: 330, borderRadius: 6 }}
         isVisible={visible}
-        onBackdropPress={toggleSiteInfoOverlay}
+        onBackdropPress={toggleTourInfoOverlay}
       >
         <View>
           <Image
-            source={{ uri: selectedSite.siteImage }}
+            source={{ uri: selectedTour.tourImage }}
             style={{ height: 200, width: "100%", borderRadius: 6 }}
           />
-          <Text>{selectedSite.siteName}</Text>
+          <Text>Tour ID: {selectedTour.tourId}</Text>
+          <Text>{selectedTour.tourName}</Text>
+          <Text>Tour code: {selectedTour.tourCode}</Text>
 
-          <Text>{selectedSite.siteDescription}</Text>
-          <Text>{selectedSite.siteAddress}</Text>
-          <Text>{selectedSite.contactInfo}</Text>
-          <Text
-            style={{ color: "blue" }}
-            onPress={() => Linking.openURL(selectedSite.websiteLink)}
-          >
-            Visit Website
+          <Text>{selectedTour.tourDescription}</Text>
+          <Text>
+            Tour Sites:
+            {selectedTourSites.map((siteId, i) => (
+              <Text key={i}>{siteId}</Text>
+            ))}
+          </Text>
+          <Text>
+            Last updated: {moment(selectedTour.updatedAt).format("l")},{" "}
+            {moment(selectedTour.updatedAt).format("LT")}
           </Text>
         </View>
 
@@ -106,26 +110,25 @@ const Sites = () => {
             justifyContent: "flex-end",
           }}
         >
-          <Button title="Back" onPress={toggleSiteInfoOverlay} />
+          <Button title="Back" onPress={toggleTourInfoOverlay} />
         </View>
       </Overlay>
-      {sites.map(
+      {tours.map(
         (
           {
-            siteImage,
-            siteName,
-            siteDescription,
-            siteAddress,
-            contactInfo,
-            websiteLink,
+            tourImage,
+            tourName,
+            tourDescription,
+            tourCode,
             updatedAt,
-            siteId,
+            tourId,
+            tourSites,
           },
           i
         ) => (
           <ListItem key={i} bottomDivider>
             <Image
-              source={{ uri: siteImage }}
+              source={{ uri: tourImage }}
               style={{
                 width: 150,
                 height: 100,
@@ -135,13 +138,13 @@ const Sites = () => {
               }}
             />
             <ListItem.Content>
-              <Text>Site ID: {siteId}</Text>
-              <ListItem.Title>{siteName}</ListItem.Title>
+              <Text>Tour ID: {tourId}</Text>
+              <ListItem.Title>{tourName}</ListItem.Title>
+              <Text>Tour code: {tourCode}</Text>
               <Text>
-                Last updated @ {moment(updatedAt).format("DD/MM/YYYY")},
+                Last updated @ {moment(updatedAt).format("DD/MM/YYYY")},{" "}
                 {moment(updatedAt).format("LT")}
               </Text>
-
               <View
                 style={{
                   flexDirection: "row",
@@ -151,7 +154,7 @@ const Sites = () => {
               >
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("EditSiteForm", { id: siteId });
+                    navigation.navigate("EditTourForm", { tourId });
                   }}
                 >
                   <Icon
@@ -164,17 +167,16 @@ const Sites = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    setSelectedSite({
-                      siteImage,
-                      siteName,
-                      siteDescription,
-                      siteAddress,
-                      contactInfo,
-                      websiteLink,
+                    setSelectedTour({
+                      tourImage,
+                      tourName,
+                      tourDescription,
+                      tourCode,
                       updatedAt,
-                      siteId,
+                      tourId,
                     });
-                    toggleSiteInfoOverlay();
+                    setSelectedTourSites(tourSites);
+                    toggleTourInfoOverlay();
                   }}
                 >
                   <Icon
@@ -186,7 +188,7 @@ const Sites = () => {
                     style={{ marginLeft: 15, marginRight: 15 }}
                   />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => checkDelete(siteId, siteName)}>
+                <TouchableOpacity onPress={() => checkDelete(tourId, tourName)}>
                   <Icon
                     color="red"
                     name="trash"
@@ -219,4 +221,4 @@ const style = StyleSheet.create({
   },
 });
 
-export default Sites;
+export default Tours;

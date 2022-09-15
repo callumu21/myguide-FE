@@ -198,6 +198,9 @@ const NewSiteForm = () => {
               value={value}
               keyboardType="default"
               numberOfLines={3}
+              multiline={true}
+              returnKeyType={"done"}
+              blurOnSubmit={true}
               style={{ textAlignVertical: "top", ...styles.input }}
             />
           )}
