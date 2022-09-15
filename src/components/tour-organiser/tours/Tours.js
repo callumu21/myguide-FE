@@ -142,7 +142,8 @@ const Tours = () => {
               <ListItem.Title>{tourName}</ListItem.Title>
               <Text>Tour code: {tourCode}</Text>
               <Text>
-                Last updated @ {moment(updatedAt).format("DD/MM/YYYY" )}, {moment(updatedAt).format("LT")}
+                Last updated @ {moment(updatedAt).format("DD/MM/YYYY")},{" "}
+                {moment(updatedAt).format("LT")}
               </Text>
               <View
                 style={{
@@ -184,6 +185,7 @@ const Tours = () => {
                     size={30}
                     type="font-awesome-5"
                     underlayColor="#fff"
+                    style={{ marginLeft: 15, marginRight: 15 }}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => checkDelete(tourId, tourName)}>
