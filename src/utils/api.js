@@ -67,3 +67,63 @@ export const deleteSiteById = async (siteId) => {
   }
 };
 
+export const fetchTours = async (author_id) => {
+  try {
+    const data = await axios.get(`https://myguidebackend.onrender.com/tours`, {
+      params: { author_id },
+    });
+    return data;
+  } catch (error) {
+    return error.response.data;
+  }
+};
+
+export const addNewTour = async (newTourData) => {
+  try {
+    const tour = await axios.post(
+      `https://myguidebackend.onrender.com/tours`,
+      newTourData
+    );
+    return tour.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+
+export const fetchTourById = async (tour_Id) => {
+  try {
+    const tour = await axios.get(
+      `https://myguidebackend.onrender.com/tours/${tour_Id}`
+    );
+    return tour.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+
+
+export const updateTour = async (tour_Id, updateTourData) => {
+  try {
+    const tour = await axios.patch(
+      `https://myguidebackend.onrender.com/tours/${tour_Id}`,
+      updateTourData
+    );
+    return tour.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+
+export const deleteTourById = async (tour_Id) => {
+  try {
+    const tour = await axios.delete(
+      `https://myguidebackend.onrender.com/tours/${tour_Id}`
+    );
+    return tour;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

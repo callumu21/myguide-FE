@@ -3,12 +3,13 @@ import { Text, Icon } from "@rneui/themed";
 import { Link } from "@react-navigation/native";
 import Sites from "./sites/Sites";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Tours from "./Tours";
+import Tours from "./tours/Tours";
 import NewSiteForm from "./sites/NewSiteForm";
+import NewTourForm from "./tours/NewTourForm";
 
 const Tab = createBottomTabNavigator();
 
-const MyTours = () => {
+const Admin = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -26,10 +27,10 @@ const MyTours = () => {
         }}
       />
       <Tab.Screen
-        name="NewSiteForm"
+        name={"Add New Site"}
         component={NewSiteForm}
         options={{
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({ focused, color, size }) => (
             <Icon
               name="plus-circle"
               type="font-awesome-5"
@@ -39,6 +40,7 @@ const MyTours = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="Tours"
         component={Tours}
@@ -53,8 +55,23 @@ const MyTours = () => {
           ),
         }}
       />
+
+      <Tab.Screen
+        name={"Add New Tour"}
+        component={NewTourForm}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <Icon
+              name="plus-circle"
+              type="font-awesome-5"
+              color={color}
+              size={size}
+            />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
 
-export default MyTours;
+export default Admin;
