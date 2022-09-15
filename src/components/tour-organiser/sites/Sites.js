@@ -7,14 +7,7 @@ import {
   Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import {
-  Text,
-  ListItem,
-  Button,
-  Icon,
-  Image,
-  Overlay
-} from "@rneui/themed";
+import { Text, ListItem, Button, Icon, Image, Overlay } from "@rneui/themed";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { fetchSites, deleteSiteById } from "../../../utils/api";
 import * as Linking from "expo-linking";
@@ -65,7 +58,6 @@ const Sites = () => {
     setVisible(!visible);
   };
 
-
   if (loading) {
     return (
       <View>
@@ -98,10 +90,7 @@ const Sites = () => {
           },
           i
         ) => (
-          <ListItem
-            key={i}
-            bottomDivider
-          >
+          <ListItem key={i} bottomDivider>
             <Image
               source={{ uri: siteImage }}
               style={{
@@ -177,6 +166,7 @@ const Sites = () => {
                     size={30}
                     type="font-awesome-5"
                     underlayColor="#fff"
+                    style={{ marginLeft: 15, marginRight: 15 }}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => checkDelete(siteId, siteName)}>
