@@ -1,11 +1,10 @@
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { CurrentRenderContext, NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'expo-status-bar';
 import JoinTour from './src/components/user/JoinTour';
 import Home from './src/components/Home'
-import { Button, createTheme, Image, ThemeProvider } from '@rneui/themed';
+import { Image, ThemeProvider } from '@rneui/themed';
 import theme from './src/stylesheets/theme-provider'
 import EditSiteForm from './src/components/tour-organiser/sites/EditSiteForm';
 import { View } from 'react-native';
