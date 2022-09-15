@@ -12,16 +12,15 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
   },
-
-  logoContainer: {
-    position: 'absolute',
-    right: -Dimensions.get('window').width / 1.7
-  },
   logo: {
     width: 100,
     height: 40,
     top: 0,
     resizeMode: 'contain',
+  },
+  loadMessage: {
+    textAlign: 'center',
+    fontSize: 20
   }
 });
 

@@ -161,7 +161,6 @@ const NewTourForm = () => {
 
   const addSites = (siteId) => {
     if (!addedSites.includes(siteId)) {
-      console.log("I'm not in the array");
       setAddedSites((addedSites) => [siteId, ...addedSites]);
       Alert.alert("Site added to Tour!", "", [{ text: "OK" }]);
     } else {

@@ -6,6 +6,7 @@ import SitesTab from './SitesTab'
 import Map from './Map'
 import { getTourById } from "../../utils/api"
 import Loading from '../../utils/Loading'
+import styles from '../../stylesheets/join-tour'
 
 const Tab = createBottomTabNavigator()
 
@@ -47,12 +48,12 @@ const JoinTour = ({route}) => {
   const {tourCode, tourName, tourDescription, tourImage} = tour;
 
   while(!hasStarted){
-    return <View style={{alignItems: 'center', textAlign: 'center'}}>
-    <Text style={{fontSize: 50}}>{tourName}</Text>
-    <Image source={{uri:tourImage}} style={{height: 200, width: 300}}></Image>
+    return <View style={styles.startTourContainer}>
+    <Text style={styles.startTourTitle}>{tourName}</Text>
+    <Image source={{uri:tourImage}} style={styles.startTourImage}></Image>
     <Text> Tour code: {tourCode}</Text>
-    <Text>{tourDescription}</Text>
-    <Button onPress={startTour}>Start Tour</Button>
+    <Text style={styles.startTourDescription}>{tourDescription}</Text>
+    <Button onPress={startTour} style={styles.startTourButton}>Start Tour</Button>
     </View>
   }
 

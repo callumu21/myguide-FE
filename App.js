@@ -22,14 +22,14 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            headerTitle: () => (
-              <View style={styles.logoContainer}>
-                <Image source={logo} style={styles.logo} />
-              </View>
-            ),
-          }}
-        >
-          <Stack.Screen name="Home" component={Home} options={{}} />
+              headerTitle: () => (
+                <View>
+                  <Image source={logo} style={styles.logo}/>
+                </View>
+              ),
+              headerTitleAlign: 'center'
+      }}>
+          <Stack.Screen name="Home" component={Home} options={{}}/>
           <Stack.Screen name="Tour" component={JoinTour} />
           <Stack.Screen name="Admin" component={Admin} />
           <Stack.Screen name="EditSiteForm" component={EditSiteForm} />

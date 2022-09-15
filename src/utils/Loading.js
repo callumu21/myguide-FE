@@ -1,6 +1,6 @@
 import { Text, LinearProgress } from "@rneui/themed"
 import { View } from "react-native"
-import styles from "../stylesheets/join-tour"
+import styles from "../stylesheets/home"
 
 const Loading = ({loadMessage}) => {
     return <View>

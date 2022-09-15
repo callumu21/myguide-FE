@@ -1,6 +1,7 @@
 import { Icon, Text, ListItem, Image } from "@rneui/themed"
 import { useEffect, useState } from "react";
 import { Linking, ScrollView } from "react-native";
+import styles from "../../stylesheets/join-tour";
 import { getSitesByTour } from "../../utils/api";
 import Loading from "../../utils/Loading";
 
@@ -49,10 +50,9 @@ const SitesTab = ({tourData}) => {
                         newExpanded[siteName] = !currExpanded[siteName]
                         return newExpanded
                     })
-                }}
-                >
+                }}>
 
-                <ListItem  bottomDivider>
+                <ListItem bottomDivider style={styles.accordianHead}>
                     <Image source={{uri:siteImage}} style={{height: 100, width: 100}}/>
                     <ListItem.Content>
                     <Text>{siteDescription}</Text>

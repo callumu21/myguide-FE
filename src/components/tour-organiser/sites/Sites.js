@@ -45,7 +45,6 @@ const Sites = () => {
           deleteSiteById(siteId)
             .then(() => {
               Alert.alert(`Site deleted!`, "", [{ text: "Back" }]);
-              console.log("Site deleted!");
             })
             .catch((error) => {
               setError(error);
@@ -184,6 +183,7 @@ const Sites = () => {
                     size={30}
                     type="font-awesome-5"
                     underlayColor="#fff"
+                    style={{ marginLeft: 15, marginRight: 15 }}
                   />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => checkDelete(siteId, siteName)}>

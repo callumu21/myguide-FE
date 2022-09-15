@@ -56,7 +56,6 @@ export const addNewSite = async (newSiteData) => {
 
 
 export const deleteSiteById = async (siteId) => {
-    console.log(siteId)
   try {
     const site = await axios.delete(
       `https://myguidebackend.onrender.com/sites/${siteId}`

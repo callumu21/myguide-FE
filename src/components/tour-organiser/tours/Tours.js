@@ -49,7 +49,6 @@ const Tours = () => {
             deleteTourById(tourId)
               .then(() => {
                 Alert.alert(`Tour deleted!`, "", [{ text: "Back" }]);
-                console.log("Tour deleted!");
               })
               .catch((error) => {
                 setError(error);
@@ -176,8 +175,6 @@ const Tours = () => {
                       tourId,
                     });
                     setSelectedTourSites(tourSites);
-                    console.log(tourSites);
-
                     toggleTourInfoOverlay();
                   }}
                 >
