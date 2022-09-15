@@ -33,7 +33,6 @@ const NewSiteForm = () => {
         setLoading(false);
         return;
       } else {
-        console.log("Access granted!!");
         setStatus(status);
 
         let { coords } = await Location.getCurrentPositionAsync({});

@@ -138,7 +138,10 @@ const Sites = () => {
             <ListItem.Content>
               <Text>Site ID: {siteId}</Text>
               <ListItem.Title>{siteName}</ListItem.Title>
-              <Text>Last updated @ {moment(updatedAt).format('l')}, {moment(updatedAt).format('LT')}</Text>
+              <Text>
+                Last updated @ {moment(updatedAt).format("DD/MM/YYYY")},
+                {moment(updatedAt).format("LT")}
+              </Text>
 
               <View
                 style={{
